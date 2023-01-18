@@ -14,15 +14,34 @@
         <input type="time" name="start" id="start" required>
         <input type="submit" value="submit">
     </form>
+    
     <table border = 1>
-        {% for key in data %}
+        {% for slot_no,slot_user,is_confirmed,qr_img in data %}
     
         <tr>
-           <th> {{ key }} </th>
+           <th> {{ slot_no }} </th>
+           <th> {{ slot_user }} </th>
+           <th> {{ is_confirmed }} </th>
+           <th>
+            {% if qr_img != None %}
+            <img src="data:image/png;base64,{{qr_img}}" alt="" srcset="">
+           {% endif %}
+           </th>
+           <th>
+            <form action="http://127.0.0.1:5000/del" method="post">
+                <input type="hidden" name="Served" value={{slot_no}}>
+                <input type="submit" value="serving completed">
+            </form>
+           </th>
+           
         </tr>
     
         {% endfor %}
      </table>
-
+<script>
+    myfunction(){
+        
+    }
+</script>
 </body>
 </html>
