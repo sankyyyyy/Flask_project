@@ -1,23 +1,51 @@
+{% extends "base.html" %}
+{%block body%}
+{{super()}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Home</title>
-    <!-- <script src="html5-qrcode.min.js"></script> -->
+    {% block title%}<title>Home</title> {%endblock%}
     <script src="{{url_for('static', filename='html5-qrcode.min.js')}}"></script>
-    <!-- <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script> -->
 </head>
 <body>
-    {% for i in data%}
-    <a> {{ i }}</a>
-    {% endfor %}
 
-    <div id="reader" style="width: 400px; height: 300px;"></div>
-    <div id="result" ></div>
+  <div class="container ">
+    <div class="row justify-content-center">
+      <div class="col-md-4 mx-auto m-5">
+        <!-- Your content here -->
+        <h6>Scan Qr code to confirm your Appointment</h6>
+
+      
+        <div id="reader" class="border shadow" style="width: 400px; height: 300px;"></div>
+        <div id="result" ></div>
+        {% with messages = get_flashed_messages(with_categories=True) %}
+        {% for category, message in messages %}
+        {% if category == "error" %}
+        <div class="alert alert-danger m-2 p-2" role="alert">
+        {{ message }}
+        </div>
+        {% else %}
+        <div class="alert alert-success m-2 p-2" role="alert">
+        {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endwith %}
+      </div>
+    </div>
+  </div>
+
+
 
     <script>
+      function onScanSuccess(decodedText, decodedResult) {
+    // Handle on success condition with the decoded text or result.
+    console.log(`Scan result: ${decodedText}`, decodedResult);
+}
+
       const scanner = new Html5QrcodeScanner('reader',{
         qrbox:{
           width:250,
@@ -27,17 +55,17 @@
       });
 
       scanner.render(success,error);
-
+      console.log(result)
       function success(result){
         document.getElementById('result').innerHTML=`
         <h2>Click on Submit to confirm!</h2>
-        <form action="" method="post">
+        <form action="{{url_for("home")}}" method="post">
           <input type="hidden" value=${result} name="result"></input>
           <input type="submit" value="Confirm">
         </form>
         `;
 
-        scanner.clear();
+        // scanner.clear();
         console.log(result);
         document.getElementById('reader').remove();
       }
@@ -51,3 +79,4 @@
 
 </body>
 </html>
+{%endblock%}

@@ -1,27 +1,107 @@
+{%extends "base.html"%}
+{%block body%}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Register</title>
 </head>
 <body>
-    <form action="http://127.0.0.1:5000/register" method="post">
-        <label for="name">Full Name</label>
-        <input id="name" type="text" name="name" required><br>
-
-        <label for="username">Username</label>
-        <input type="text" name="username" required><br>
-
-        <label for="email">Email</label>
-        <input type="email" name="email" required><br>
-
-        <label for="password">Password</label>
-        <input type="password" name="password" required><br>
-
-        <input type="submit" name="Submit"><br>
-
-    </form>
+      </div>
+      <div class='container-fluid main-container m-3 shadow-lg p-3 mb-5 bg-body rounded'>
+        <h1>Register</h1>
+      <form action="{{url_for('register')}}" method="post">
+    <div class="row mb-3">
+      <label for="name" class="col-sm-2 col-form-label">Name
+      </label>
+      <div class="col-sm-10">
+        <input id="name"
+        type="text" 
+        class="form-control"
+        name="name"
+        placeholder="Name"
+        required
+        />
+      </div>
+    </div>
+    <div class="row mb-3">
+      <label for="username" class="col-sm-2 col-form-label">Username</label>
+      <div class="col-sm-10">
+        <input id="username"
+        type="username"
+        class="form-control"
+        name="username"
+        placeholder="Username"
+        required/>
+      </div>
+    </div>
+    <div class="row mb-3">
+        <label for="password" class="col-sm-2 col-form-label">Email</label>
+        <div class="col-sm-10">
+          <input id="email"
+          type="email"
+          class="form-control" 
+          name="email"
+          placeholder="Email"
+          required/>
+        </div>
+      </div>
+    <div class="row mb-3">
+      <label for="password" class="col-sm-2 col-form-label">Password</label>
+      <div class="col-sm-10">
+        <input id="password"
+        type="password"
+        class="form-control" 
+        name="password"
+        placeholder="Password"
+        required
+        />
+  
+      </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=True) %}
+    {% for category, message in messages %}
+    {% if category == "error" %}
+    <div class="alert alert-danger m-2 p-2" role="alert">
+    {{ message }}
+    </div>
+    {% else %}
+    <div class="alert alert-success m-2 p-2" role="alert">
+    {{ message }}
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endwith %}
+    
+    <div class='text-center'>
+    <a href='/login'>Already a User?Login here</a><br />
+    <button type="submit" class="btn btn-primary"
+    >Sign Up</button>
+    </div>
+  </form>
+      </div>
+    
 </body>
 </html>
+{%endblock%}
+
+
+<!-- <form action="http://127.0.0.1:5000/register" method="post">
+    <label for="name">Full Name</label>
+    <input id="name" type="text" name="name" required><br>
+
+    <label for="username">Username</label>
+    <input type="text" name="username" required><br>
+
+    <label for="email">Email</label>
+    <input type="email" name="email" required><br>
+
+    <label for="password">Password</label>
+    <input type="password" name="password" required><br>
+
+    <input type="submit" name="Submit"><br>
+
+</form> -->

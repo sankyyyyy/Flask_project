@@ -1,3 +1,6 @@
+{% extends 'base.html'%}
+
+{%block body%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,41 +10,67 @@
     <title>Admin</title>
 </head>
 <body>
-    Day has not started yet!
+    <div class="container-fluid">
+        <h6>
+            Day has not started yet!
+        </h6>
     <h3>Start day</h3>
-    <form action="http://127.0.0.1:5000/ininitiateslot" method="post">
-        <label for="start">Start time</label>
-        <input type="time" name="start" id="start" required>
-        <input type="submit" value="submit">
-    </form>
-    
-    <table border = 1>
-        {% for slot_no,slot_user,is_confirmed,qr_img in data %}
-    
-        <tr>
-           <th> {{ slot_no }} </th>
-           <th> {{ slot_user }} </th>
-           <th> {{ is_confirmed }} </th>
-           <th>
-            {% if qr_img != None %}
-            <img src="data:image/png;base64,{{qr_img}}" alt="" srcset="">
-           {% endif %}
-           </th>
-           <th>
-            <form action="http://127.0.0.1:5000/del" method="post">
-                <input type="hidden" name="Served" value={{slot_no}}>
-                <input type="submit" value="serving completed">
-            </form>
-           </th>
-           
-        </tr>
-    
-        {% endfor %}
-     </table>
-<script>
-    myfunction(){
+    <div class="form-group row">
         
-    }
-</script>
+        <div class="col-sm-1 ">
+            <form action="http://127.0.0.1:5000/ininitiateslot" method="post">
+                <label class="m-1"for="start"><b> Start time:</b> </label>
+                <input class="form-control m-1" type="time" name="start" id="start" required>
+                <input type="submit" class="btn btn-primary m-1" value="submit">
+            </form>
+        </div>
+    </div>
+    <div class="text-center w-80 p-3"> 
+
+        <table class="table table-striped table-hover table-bordered">
+            <thead><tr>
+                <th>Slot Number</th>
+                <th>Slot User</th>
+                <th>Appointment Status</th>
+                <th>Qr Code</th>
+                <th>Serving Status</th>
+            </tr></thead>
+            {% for slot_no,slot_user,is_confirmed,qr_img in data %}
+            <tr>
+                <tbody>
+    
+                    <td> {{ slot_no }} </td>
+                    <td> {{ slot_user }} </td>
+                    {% if is_confirmed==0%}
+                    <td> Not Confirmed </td>
+                    {%endif%}
+                    {% if is_confirmed==1%}
+                    <td> Confirmed </td>
+                    {%endif%}
+                    <td>
+    
+                     {% if qr_img != None %}
+                     <img src="data:image/png;base64,{{qr_img}}" alt="" srcset="">
+                    {% endif %}
+                    </td>
+                    {% if is_confirmed==0%}
+                    <td>Yet to Confirm</td>
+                    {%else%}
+                    <td>
+                     <form action="http://127.0.0.1:5000/del" method="post">
+                         <input type="hidden" name="Served" value={{slot_no}}>
+                         <input type="submit" value="serving completed">
+                     </form>
+                    </td>
+                    {% endif %}
+                </tbody>
+               
+            </tr>
+        
+            {% endfor %}
+         </table>
+    </div>
+</div>
 </body>
 </html>
+{%endblock%}
