@@ -1,7 +1,7 @@
 import base64
 import qrcode
 import os
-
+import json
 
 def convert_to_binary(filename):
     with open(filename,'rb') as file:
@@ -16,7 +16,9 @@ def binary_to_file(binary_data):
 
 
 def my_qr(data):
-    img = qrcode.make(f'{data}')
+    # img = qrcode.make(data)
+    data = json.dumps(data)
+    img = qrcode.make(data)
     # print(img)
     img.save('myqrcode.png')
     # abc = convert_to_binary('C:\\Users\\sanke\\OneDrive\\Desktop\\faee\\LineUp\\myqrcode.png')

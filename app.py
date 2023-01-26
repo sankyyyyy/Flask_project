@@ -1,13 +1,16 @@
-from flask import Flask,render_template,request,redirect,url_for,session,flash
+from flask import Flask,render_template,request,redirect,url_for,session,flash,Response
 import mysql.connector
-from flask_qrcode import QRcode
+import cv2
+import json
+from werkzeug.security import generate_password_hash, check_password_hash
+# from flask_qrcode import QRcode
 import qr_code
 from datetime import datetime,timedelta,date
 from flask_bootstrap import Bootstrap
 
 app = Flask(__name__)
 app.config["DEBUG"] = True
-QRcode(app)
+# QRcode(app)
 Bootstrap(app)
 
 
@@ -21,6 +24,34 @@ except Exception as e:
 
 cur = connection.cursor(buffered=True)
 
+@app.route('/',methods=["GET","POST"])
+def home():
+        cur.execute("show databases")
+        # if request.method=="POST":
+        #     result = request.form["result"]
+        #     print(result)
+        #     a=""
+        #     b=[]
+        #     for i in range(len(result)):
+        #         if result[i] == "=" or result[i] == ",":
+        #             b.append(a)
+        #             a= ""
+        #             continue
+        #         a+=result[i]
+        #     b.append(a)
+            # username = b[1]
+            # slot = b[3]
+            # slot = datetime.strptime(slot, "%H:%M")
+            # slot = slot.strftime("%H:%M")
+            # print(username)
+            # print(slot)
+            # cur.execute("update slots set is_confirmed=True where slot_time=%s and slot_user=%s",(slot,username))
+            # connection.commit()
+            # print(request.form)
+            # flash("Your Appointment Confirmed succesfully")
+            # return redirect(url_for('home'))
+        return render_template('home.html',data = cur)
+
 
 
 @app.route('/register',methods=["GET","POST"])
@@ -32,48 +63,25 @@ def register():
         if account:
             flash("This Username is taken","error")
         else:
-            cur.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, %s)', (request.form['username'], request.form['password'], request.form['email'], request.form['name']))
+            password = request.form['password']
+            hashed_password = generate_password_hash(password)
+            cur.execute('INSERT INTO accounts VALUES (NULL, %s, %s, %s, %s)', (request.form['username'],hashed_password, request.form['email'], request.form['name']))
             connection.commit()
             return redirect(url_for("login"))
     return render_template("register.html")
  
-@app.route('/',methods=["GET","POST"])
-def home():
-        cur.execute("show databases")
-        if request.method=="POST":
-            result = request.form["result"]
-            print(result)
-            a=""
-            b=[]
-            for i in range(len(result)):
-                if result[i] == "=" or result[i] == ",":
-                    b.append(a)
-                    a= ""
-                    continue
-                a+=result[i]
-            b.append(a)
-            username = b[1]
-            slot = b[3]
-            slot = datetime.strptime(slot, "%H:%M")
-            slot = slot.strftime("%H:%M")
-            print(username)
-            print(slot)
-            cur.execute("update slots set is_confirmed=True where slot_time=%s and slot_user=%s",(slot,username))
-            connection.commit()
-            print(request.form)
-            flash("Your Appointment Confirmed succesfully")
-            return redirect(url_for('home'))
-        return render_template('home.html',data = cur)
-
 
 @app.route('/login',methods=["GET","POST"])
 def login():
     if request.method == "POST":
         print(request.form)
-        cur.execute("select id,username,pass from accounts where username=%s and pass=%s",(request.form['username'],request.form['password']))
+        username = request.form['username']
+        password = request.form['password']
+        cur.execute("select id,username,pass from accounts where username=%s",(username,))
         account = cur.fetchone()
+
         print(account)
-        if account:
+        if account and check_password_hash(account[2], password):
             session['loggedin'] = True
             session['id'] = account[0]
             session['username'] = account[1]
@@ -82,6 +90,7 @@ def login():
         else:
             flash("invalid credintials","error")
             return redirect(url_for("login"))
+    return render_template('login.html')
 
 
 @app.route('/logout')
@@ -118,7 +127,6 @@ def admin():
         i+=1
         data.append(temp)
     # print(data)
-
     return render_template("admin.html",data = data,id = id,username=username)
 
 
@@ -127,7 +135,9 @@ def del_it():
     if request.method == 'POST':
         print(request.form)
         slot = request.form["Served"]
-        cur.execute("delete from slots where slot_no=%s",(slot,))
+        slot = datetime.strptime(slot, "%H:%M")
+        slot = slot.strftime("%H:%M")
+        cur.execute("delete from slots where slot_time=%s",(slot,))
         connection.commit()
     return redirect(url_for("admin"))
 
@@ -157,7 +167,6 @@ def book_slot():
         # if not there in the session then redirect to the login page
         return redirect("/login")
     print("inside book_slot")
-
     if request.method == "GET":
         today_time = date.today()
         print("Today's date:", today_time)
@@ -179,11 +188,16 @@ def book_slot():
             flash("you can only book one slot in one day")
             return redirect(url_for('book_slot'))
         else:
-            img = qr_code.my_qr(f"username={username},slot={result}")
+            # data = jsonify(f'username={username},slot={result}')
+            # img = qr_code.my_qr(data)
+            data = {"username":username,"slot":result}
+            img = qr_code.my_qr(data)
             cur.execute("update slots set slot_user=%s,qr_img =%s where slot_time =%s",(username,img,result))
             connection.commit()
+            session['slot'] = result
             flash("slot booked succesfully")
             return redirect(url_for("book_slot"))
+
 
 
 # this route will add new slots it will only accsesible from admin
@@ -203,6 +217,80 @@ def ininitiateslot():
     connection.commit()
     return redirect("/admin")
 
+qr_data_set = []
+def gen():
+    # Create a QR code detector object
+    qr_detector = cv2.QRCodeDetector()
+
+    # Open the webcam
+    cap = cv2.VideoCapture(0)
+    # is_scanned = False
+    while True:
+        # Read the webcam frame
+        ret, frame = cap.read()
+        # Detect QR codes in the frame
+        data, bbox, rectified_image = qr_detector.detectAndDecode(frame)
+        if data:
+            # QR code data was found
+            print("here it is:",data)
+            if len(qr_data_set) < 1:
+                qr_data_set.append(data)
+                # is_scanned = True
+                # cap.release() 127.0.0.1/:58    GET http://127.0.0.1:5000/video_feed net::ERR_INCOMPLETE_CHUNKED_ENCODING 200 (OK)
+        ret, jpeg = cv2.imencode('.jpg', frame)
+        if ret:
+            yield (b'--frame\r\n'
+                   b'Content-Type: image/jpeg\r\n\r\n' + jpeg.tobytes() + b'\r\n\r\n')
+        else:
+            print("Frame not captured")
+        
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(),
+                    mimetype='multipart/x-mixed-replace; boundary=frame')
+
+
+
+@app.route('/confirm_qr')
+def confirm_qr():
+    print("inside confirm qr:",qr_data_set)
+    if qr_data_set:
+        username_session = session.get("username")
+        account = qr_data_set[0]
+        account = json.loads(account)
+        print(account)
+        username = account['username']
+        if username == username_session:
+            slot = account['slot']
+            slot = datetime.strptime(slot, "%H:%M")
+            slot = slot.strftime("%H:%M")
+            print(username)
+            print(slot)
+            cur.execute("select * from slots where slot_user=%s and slot_time=%s",(username,slot))
+            user = cur.fetchone()
+            # print(user)
+            if user:
+                cur.execute("update slots set is_confirmed=True where slot_time=%s and slot_user=%s",(slot,username))
+                connection.commit()
+                qr_data_set.clear()
+                # print(request.form)
+                flash("Your Appointment Confirmed succesfully","succsess")
+                print("Your Appointment Confirmed succesfully")
+                return redirect(url_for('home'))
+            else:
+                qr_data_set.clear()
+                print("got in inner else")
+                flash("You haven't booked appointment yet!","error")
+                return redirect(url_for('home'))
+        else:
+            print(username)
+            print(username_session)
+            qr_data_set.clear()
+            print("Username is not matching!")
+            flash("Username is not matching!","error")
+            return redirect(url_for('home'))
+    return redirect(url_for('home'))
 
 
 if __name__ == '__main__':
