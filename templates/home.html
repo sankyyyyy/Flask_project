@@ -17,11 +17,12 @@
       <div class="col-md-4 mx-auto m-5">
         <!-- Your content here -->
         {{data}}
+        {{arr}}
         <h6>Scan Qr code to confirm your Appointment</h6>
 
       
-        <div id="reader" class="border shadow" style="width: 504px; height: 385px;">
-          <img id="myimage" align="center" src="{{url_for('video_feed') }}" alt="Webcam feed" width="500" height="375">
+        <div  >
+          <img id="myimage" align="center" src="{{url_for('qrcode.video_feed') }}" alt="Webcam feed" width="500" height="375">
         </div>
 
         <div id="result" ></div>
@@ -44,13 +45,16 @@
 
     
   <script>
-    // JavaScript code in your frontend
-  setInterval(() => {
+    setInterval(() => {
     fetch('/confirm_qr')
-      .catch(error => console.log(error));
+    .then(response=>response.json())
+    .catch(error => console.log(error));
   }, 10000);
   
   </script>
+
+
+  
 
 </body>
 </html>

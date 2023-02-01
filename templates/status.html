@@ -7,6 +7,7 @@
             <div class="card-body">
                 <h5 class="text-center">Profile</h5>
                 <!-- <p class="card-text text-center">Name:{{account[4]}}</p> -->
+
                 <div class="container">
                     <div class="row">
                         <div class="col-6">
@@ -41,6 +42,19 @@
                         </div>
                     </div>
                 </div>
+                {% with messages = get_flashed_messages(with_categories=True) %}
+        {% for category, message in messages %}
+        {% if category == "error" %}
+        <div class="alert alert-danger m-2 p-2" role="alert">
+        {{ message }}
+        </div>
+        {% else %}
+        <div class="alert alert-success m-2 p-2" role="alert">
+        {{ message }}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% endwith %}
                 {% if slot_account%}
                 <!-- Show is slot booked here or not -->
                 <div class="container">
@@ -53,7 +67,7 @@
                         <div class="col-6">
                             <p class="card-text m-2">Slot Time: {{slot_account[0]}}</p>
                             <p class="card-text m-2">Slot Date: {{slot_account[1]}}</p>
-                            <form action="{{url_for('cancel_by_user')}}"  method="post">
+                            <form action="{{url_for('bookslot.cancel_by_user')}}"  method="post">
                                 <input type="hidden" value={slot_account[0]} name={slot_account[0]}>
                                 <input type="submit" class="btn btn-primary" value="Cancel">
                             </form>

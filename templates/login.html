@@ -15,7 +15,7 @@
         <div class='container-fluid main-container m-3 shadow-lg p-3 mb-5 bg-body rounded'>
           <h2>Login</h2>
       
-        <form action="{{url_for('login')}}" method="post">
+        <form action="{{url_for('login.login')}}" method="post">
       <div class="row mb-3">
         <label for="username" class="col-sm-2 col-form-label">Username</label>
         <div class="col-sm-10">
@@ -49,7 +49,7 @@
       {% endfor %}
       {% endwith %}
       <div class='text-center'>
-      <a href="{{url_for('register')}}">New User?Register here</a><br />
+      <a href="{{url_for('register.register')}}">New User?Register here</a><br />
       <button type="submit" class="btn btn-primary"
       name='login' id='login' value="submit"
       >Login</button>

@@ -13,7 +13,7 @@
       </div>
       <div class='container-fluid main-container m-3 shadow-lg p-3 mb-5 bg-body rounded'>
         <h1>Register</h1>
-      <form action="{{url_for('register')}}" method="post">
+      <form action="{{url_for('register.register')}}" method="post">
     <div class="row mb-3">
       <label for="name" class="col-sm-2 col-form-label">Name
       </label>
@@ -77,7 +77,7 @@
     {% endwith %}
     
     <div class='text-center'>
-    <a href='/login'>Already a User?Login here</a><br />
+    <a href="{{url_for('login.login')}}">Already a User?Login here</a><br />
     <button type="submit" class="btn btn-primary"
     >Sign Up</button>
     </div>
@@ -89,19 +89,3 @@
 {%endblock%}
 
 
-<!-- <form action="http://127.0.0.1:5000/register" method="post">
-    <label for="name">Full Name</label>
-    <input id="name" type="text" name="name" required><br>
-
-    <label for="username">Username</label>
-    <input type="text" name="username" required><br>
-
-    <label for="email">Email</label>
-    <input type="email" name="email" required><br>
-
-    <label for="password">Password</label>
-    <input type="password" name="password" required><br>
-
-    <input type="submit" name="Submit"><br>
-
-</form> -->

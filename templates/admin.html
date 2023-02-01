@@ -11,14 +11,16 @@
 </head>
 <body>
     <div class="container-fluid">
+        {%if not data%}
         <h6>
             Day has not started yet!
         </h6>
+        {%endif%}
     <h3>Start day</h3>
     <div class="form-group row">
         
         <div class="col-sm-1 ">
-            <form action="http://127.0.0.1:5000/ininitiateslot" method="post">
+            <form action="{{url_for('admin.ininitiateslot')}}" method="post">
                 <label class="m-1"for="start"><b> Start time:</b> </label>
                 <input class="form-control m-1" type="time" name="start" id="start" required>
                 <input type="submit" class="btn btn-primary m-1" value="submit">
@@ -57,7 +59,7 @@
                     <td>Yet to Confirm</td>
                     {%else%}
                     <td>
-                     <form action="http://127.0.0.1:5000/del" method="post">
+                     <form action="{{url_for('admin.del')}}" method="post">
                          <input type="hidden" name="Served" value={{slot_no}}>
                          <input type="submit" value="serving completed">
                      </form>
