@@ -29,4 +29,3 @@ def register():
         return str(e)
     finally:
         cur.close()
- 

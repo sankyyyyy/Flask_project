@@ -3,7 +3,7 @@ from database import connect_to_database
 
 home_bp = Blueprint('home',__name__)
 
-@home_bp.route('/',methods=["GET"])
+@home_bp.route('/home',methods=["GET"])
 def home():
     connection = connect_to_database()
     cur = connection.cursor(buffered=True)

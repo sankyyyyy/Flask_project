@@ -28,8 +28,11 @@ def gen():
 
 @qrcode_bp.route('/video_feed')
 def video_feed():
-    return Response(gen(),
+    try:
+        return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
+    except Exception as e:
+        return str(e)
 
 
 
@@ -37,32 +40,34 @@ def video_feed():
 def confirm_qr():
     connection = connect_to_database()
     cur = connection.cursor(buffered=True)
-    print("inside confirm qr:",qr_data_set)
-    if qr_data_set:
-        username_session = session.get("username")
-        account = qr_data_set[0]
-        account = json.loads(account)
-        username = account['username']
-        if username == username_session:
-            slot = account['slot']
-            slot = datetime.strptime(slot, "%H:%M")
-            slot = slot.strftime("%H:%M")
-            cur.execute("select * from slots where slot_user=%s and slot_time=%s",(username,slot))
-            user = cur.fetchone()
-            if user:
-                cur.execute("update slots set is_confirmed=True where slot_time=%s and slot_user=%s",(slot,username))
-                connection.commit()
-                qr_data_set.clear()
-                flash("Your Appointment Confirmed succesfully","succsess")
-                return redirect(url_for('home.home'))
+    try:
+        if qr_data_set:
+            username_session = session.get("username")
+            account = qr_data_set[0]
+            account = json.loads(account)
+            username = account['username']
+            if username == username_session:
+                slot = account['slot']
+                slot = datetime.strptime(slot, "%H:%M")
+                slot = slot.strftime("%H:%M")
+                cur.execute("select * from slots where slot_user=%s and slot_time=%s",(username,slot))
+                user = cur.fetchone()
+                if user:
+                    cur.execute("update slots set is_confirmed=True where slot_time=%s and slot_user=%s",(slot,username))
+                    connection.commit()
+                    qr_data_set.clear()
+                    flash("Your Appointment Confirmed succesfully","succsess")
+                    return redirect(url_for('home.home'))
+                else:
+                    qr_data_set.clear()
+                    flash("You haven't booked appointment yet!","error")
+                    return redirect(url_for('home.home'))
             else:
                 qr_data_set.clear()
-                flash("You haven't booked appointment yet!","error")
+                flash("Username is not matching!","error")
                 return redirect(url_for('home.home'))
-        else:
-            print(username)
-            print(username_session)
-            qr_data_set.clear()
-            flash("Username is not matching!","error")
-            return redirect(url_for('home.home'))
+    except Exception as e:
+        return str(e)
+    finally:
+        cur.close()
     return redirect(url_for('home.home'))

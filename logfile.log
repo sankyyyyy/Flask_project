@@ -1,57 +1,17 @@
-2023-02-01 22:29:35,326 debug message
-2023-02-01 22:29:35,326 info
-2023-02-01 22:29:35,326 warning
-2023-02-01 22:29:35,326 error
-2023-02-01 22:29:35,326 critical
-2023-02-01 22:29:35,343 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+2023-02-02 23:21:46,769 debug message
+2023-02-02 23:21:46,769 info
+2023-02-02 23:21:46,769 warning
+2023-02-02 23:21:46,769 error
+2023-02-02 23:21:46,769 critical
+2023-02-02 23:21:46,785 [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
  * Running on http://127.0.0.1:5000
-2023-02-01 22:29:35,343 [33mPress CTRL+C to quit[0m
-2023-02-01 22:29:36,469 127.0.0.1 - - [01/Feb/2023 22:29:36] "[32mGET /confirm_qr HTTP/1.1[0m" 302 -
-2023-02-01 22:29:36,484 127.0.0.1 - - [01/Feb/2023 22:29:36] "[35m[1mGET / HTTP/1.1[0m" 500 -
-2023-02-01 22:29:36,500 Error on request:
-Traceback (most recent call last):
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\werkzeug\serving.py", line 335, in run_wsgi
-    execute(self.server.app)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\werkzeug\serving.py", line 322, in execute
-    application_iter = app(environ, start_response)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 2486, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 2466, in wsgi_app
-    response = self.handle_exception(e)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 2463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 1760, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 1758, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 1734, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "C:\Users\sanke\OneDrive\Desktop\faee\LineUp\app.py", line 32, in home
-    cur.execute("show databases")
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\mysql\connector\cursor.py", line 518, in execute
-    if not self._connection:
-ReferenceError: weakly-referenced object no longer exists
-2023-02-01 22:29:37,481 127.0.0.1 - - [01/Feb/2023 22:29:37] "[35m[1mGET / HTTP/1.1[0m" 500 -
-2023-02-01 22:29:37,484 Error on request:
-Traceback (most recent call last):
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\werkzeug\serving.py", line 335, in run_wsgi
-    execute(self.server.app)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\werkzeug\serving.py", line 322, in execute
-    application_iter = app(environ, start_response)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 2486, in __call__
-    return self.wsgi_app(environ, start_response)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 2466, in wsgi_app
-    response = self.handle_exception(e)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 2463, in wsgi_app
-    response = self.full_dispatch_request()
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 1760, in full_dispatch_request
-    rv = self.handle_user_exception(e)
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 1758, in full_dispatch_request
-    rv = self.dispatch_request()
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\flask\app.py", line 1734, in dispatch_request
-    return self.ensure_sync(self.view_functions[rule.endpoint])(**view_args)
-  File "C:\Users\sanke\OneDrive\Desktop\faee\LineUp\app.py", line 32, in home
-    cur.execute("show databases")
-  File "c:\Users\sanke\OneDrive\Desktop\faee\LineUp\venv\lib\site-packages\mysql\connector\cursor.py", line 518, in execute
-    if not self._connection:
-ReferenceError: weakly-referenced object no longer exists
+2023-02-02 23:21:46,785 [33mPress CTRL+C to quit[0m
+2023-02-02 23:21:51,946 127.0.0.1 - - [02/Feb/2023 23:21:51] "[32mPOST /login HTTP/1.1[0m" 302 -
+2023-02-02 23:21:52,157 127.0.0.1 - - [02/Feb/2023 23:21:52] "GET /home HTTP/1.1" 200 -
+2023-02-02 23:21:54,970 127.0.0.1 - - [02/Feb/2023 23:21:54] "GET /cancel_slot HTTP/1.1" 200 -
+2023-02-02 23:21:55,374 127.0.0.1 - - [02/Feb/2023 23:21:55] "GET /video_feed HTTP/1.1" 200 -
+2023-02-02 23:22:01,729 127.0.0.1 - - [02/Feb/2023 23:22:01] "GET /bookslot HTTP/1.1" 200 -
+2023-02-02 23:22:03,552 127.0.0.1 - - [02/Feb/2023 23:22:03] "[32mGET /logout HTTP/1.1[0m" 302 -
+2023-02-02 23:22:03,608 127.0.0.1 - - [02/Feb/2023 23:22:03] "GET /login HTTP/1.1" 200 -
+2023-02-02 23:22:11,079 127.0.0.1 - - [02/Feb/2023 23:22:11] "[32mPOST /login HTTP/1.1[0m" 302 -
+2023-02-02 23:22:11,221 127.0.0.1 - - [02/Feb/2023 23:22:11] "GET /admin HTTP/1.1" 200 -
