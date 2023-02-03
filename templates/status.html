@@ -59,14 +59,15 @@
                 <!-- Show is slot booked here or not -->
                 <div class="container">
                     <div class="row">
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="card-header">
                                 <h3>Your Booked Slot</h3>
                               </div>
                         </div>
-                        <div class="col-6">
+                        <div class="col-7">
                             <p class="card-text m-2">Slot Time: {{slot_account[0]}}</p>
                             <p class="card-text m-2">Slot Date: {{slot_account[1]}}</p>
+                            <p class="card-text m-2">Slot Status: {%if slot_account[2]== 0%}Not Confirmed{%endif%} {%if slot_account[2]== 1%}Confirmed{%endif%} </p>
                             <form action="{{url_for('bookslot.cancel_by_user')}}"  method="post">
                                 <input type="hidden" value={slot_account[0]} name={slot_account[0]}>
                                 <input type="submit" class="btn btn-primary" value="Cancel">

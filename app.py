@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_bootstrap import Bootstrap
-from flask_mdbootstrap import MDBootstrap
-import log
+import log as log
+
 from routes.AdminRoutes import admin
 from routes.UserRoutes import home, login, logout,register,bookslot,qrcode,landing
 
@@ -10,7 +10,7 @@ from routes.UserRoutes import home, login, logout,register,bookslot,qrcode,landi
 app = Flask(__name__)
 app.config["DEBUG"] = True
 Bootstrap(app)
-MDBootstrap(app)
+
 
 app.register_blueprint(register.register_bp)
 app.register_blueprint(login.login_bp)
@@ -23,7 +23,8 @@ app.register_blueprint(landing.landing_bp)
 
 
 app.secret_key = 'mysecretkeywhichissecret'
-log.start()
+# log.start()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,6 +1,6 @@
 from flask import Flask,render_template,request,redirect,url_for,session,flash,Response,Blueprint
 from database import connect_to_database
-import qr_code
+import qr_code as qr_code
 from datetime import datetime,timedelta,date
 
 admin_bp = Blueprint('admin',__name__)

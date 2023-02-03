@@ -12,16 +12,17 @@
     {%endblock%}
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light'>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{url_for('home.home')}}" style="padding-left:1.5rem; padding-right:1.5rem;">LineUp</a>
+        <a class="navbar-brand" href="{{url_for('landing.landing')}}" style="padding-left:1.5rem; padding-right:1.5rem;">LineUp</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end " id="navbarNavAltMarkup">
           <div class="navbar-nav">
-            <a class="nav-link active" style="padding-left:1.5rem; padding-right:1.5rem;" href="{{url_for('home.home')}}">Home</a>
+            <a class="nav-link active" style="padding-left:1.5rem; padding-right:1.5rem;" href="{{url_for('landing.landing')}}">Home</a>
             {%if session['id']%}
+            <a class="nav-link active" style="padding-left:1.5rem; padding-right:1.5rem;" href="{{url_for('home.home')}}">Confirm Appointment</a>
             <a class="nav-link" style="padding-left:1.5rem; padding-right:1.5rem;" href="{{url_for('bookslot.book_slot')}}">Book slot</a>
             <a class="nav-link" style="padding-left:1.5rem; padding-right:1.5rem;" href="{{url_for('bookslot.cancel_by_user')}}">Profile</a>
             <a class="nav-link" style="padding-left:1.5rem; padding-right:1.5rem;" href="{{url_for('logout.logout')}}">Logout</a>

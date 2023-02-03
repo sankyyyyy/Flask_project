@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{%block body%}
+{{super()}}
+
+<div class="container-fluid ">
+    <div class="row align-items-center">
+      <div class="col-12 text-center">
+        <h3>Who are you looking for?</h3>
+        <div class="eventcard">
+          <div class="row">
+            <div class="col-4 text-center">
+            <a href="{{url_for('bookslot.book_slot')}}">
+              <img src="{{ url_for('static', filename='doc1.png') }}" alt="" class="m-2 border shadow" style="width:250px ;"/>
+            </a>
+              <h5 className="card-title">Dr.Satish Roy</h5>
+            <p className="card-text">
+              Dermatologist <br />
+              20+ years Experience <br />
+              341 consults Appointment
+            </p>
+            </div>
+            <div class="col-4 text-center">
+                <a href="{{url_for('bookslot.book_slot')}}">
+              <img src="{{ url_for('static', filename='doc2.png') }}" alt="" class="m-2 border shadow" style="width:250px ;"/>
+            </a>
+              <h5 className="card-title">Dr.Smita Singh</h5>
+            <p className="card-text">
+              Dentist <br />
+              10+ years Experience <br />
+              316 consults Appointment
+            </p>
+            </div>
+            <div class="col-4 text-center">
+                <a href="{{url_for('bookslot.book_slot')}}">
+              <img src="{{ url_for('static', filename='doc3.png') }}" alt="" class="m-2 border shadow" style="width:250px ;"/>
+            </a>
+              <h5 className="card-title">Dr. Miguel Piurkowski</h5>
+            <p className="card-text">
+                Cardiologists <br />
+              15+ years Experience <br />
+              452 consults Appointment
+            </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+{%endblock%}

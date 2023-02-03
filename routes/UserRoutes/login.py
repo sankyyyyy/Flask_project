@@ -25,7 +25,8 @@ def login():
                 session['username'] = account[1]
                 if session.get("username") == "admin":
                     return redirect(url_for("admin.admin"))
-                return redirect(url_for("home.home"))
+                flash("Login succesfull")
+                return redirect(url_for("landing.landing"))
             else:
                 flash("invalid credintials","error")
                 return redirect(url_for("login.login"))

@@ -59,7 +59,7 @@
                     <td>Yet to Confirm</td>
                     {%else%}
                     <td>
-                     <form action="{{url_for('admin.del')}}" method="post">
+                     <form action="{{url_for('admin.del_it')}}" method="post">
                          <input type="hidden" name="Served" value={{slot_no}}>
                          <input type="submit" value="serving completed">
                      </form>

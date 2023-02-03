@@ -1,6 +1,6 @@
-from flask import Flask,render_template,request,redirect,url_for,session,flash,Response,Blueprint
+from flask import Flask,render_template,request,redirect,url_for,session,flash,Blueprint
 from database import connect_to_database
-import qr_code
+import qr_code as qr_code
 from datetime import date
 
 
@@ -53,7 +53,7 @@ def cancel_by_user():
             username = session.get("username")
             cur.execute("select * from accounts where username=%s",(username,))
             account = cur.fetchone()
-            cur.execute("select slot_time,date from slots where slot_user=%s",(username,))
+            cur.execute("select slot_time,date,is_confirmed from slots where slot_user=%s",(username,))
             slot_account = cur.fetchone()
             return render_template("status.html",username=username,account = account,slot_account=slot_account)
 

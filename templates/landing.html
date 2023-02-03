@@ -1,5 +1,142 @@
 {% extends "base.html" %}
 {%block body%}
 {{super()}}
-<p>landing</p>
+<header class="masthead">
+    <div class="container px-5">
+      <div class="row gx-5 align-items-center m-3  ">
+        <div class="col-lg-6">
+          <div class="mb-5 mb-lg-0 text-center text-lg-start">
+            <h1
+              class="display-1 lh-1 mb-3 d-flex "
+            >
+              Quickly LineUp
+            </h1>
+            <p class="lead fw-normal text-muted mb-5">
+              Avoid the long waiting hours in queue, and book your
+              appointment hastle free! And Easily by booking slots at home.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="masthead-device-mockup">
+            
+            <div class="device-wrapper">
+              <div
+                class="device"
+                data-device="iPhoneX"
+                data-orientation="portrait"
+                data-color="black"
+              >
+                <div class="screen bg-transparent">
+                  <img
+                    class="img-responsive"
+                    src="{{ url_for('static', filename='newiphone.svg') }}"
+                    style="width:55%; height: 55%"
+                  ></img>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="line"></div>
+  <div class="step-container">
+      <h3>How to use?</h3>
+    <div class="step">
+      <div class="step-number">
+        Login / Register</div>
+      <div class="step-description">User should Login or Register before using the LineUp service.</div>
+    </div>
+    <div class="step">
+      <div class="step-number">Select desired Services</div>
+      <div class="step-description">Select the desired amenity present according to your requirements.</div>
+    </div>
+    <div class="step">
+      <div class="step-number">Book among Available slot</div>
+      <div class="step-description">A User can select the timing of an appointment within the given groove.</div>
+    </div>
+    <div class="step">
+        <div class="step-number">Scan and Confirm</div>
+        <div class="step-description">Reach the venue on or before time of slot and scan to confirm your appointment.</div>
+      </div>
+  </div>
+  <div class="line"></div>
+  <div class="d-flex">
+    <div class="align-self-center mx-auto">
+      <h3 class="text-center">What are you looking for?</h3>
+      <div class="row">
+        <div class="col-sm-4">
+            <a href="{{url_for('landing.doctors')}}">
+          <img
+            src="{{ url_for('static', filename='hospital1.avif') }}"
+            alt=""
+            class="m-2 border shadow"
+            style="width:250px ;"
+          />
+        </a>
+          <p class="text-center">City Hospital</p>
+        </div>
+        <div class="col-sm-4">
+            <a href="{{url_for('landing.doctors')}}">
+          <img
+            class="m-2 border shadow"
+            src="{{ url_for('static', filename='hospital2.avif') }}"
+            alt=""
+            style="width:250px ;"
+          />
+        </a>
+          <p class="text-center">Springhill Medical Clinic</p>
+        </div>
+        <div class="col-sm-4">
+            <a href="{{url_for('landing.doctors')}}">
+          <img
+            src="{{ url_for('static', filename='hospital3.jpg') }}"
+            alt=""
+            class="m-2 border shadow"
+            style="width:250px ;"
+          />
+        </a>
+          <p class="text-center">Global Health Hospital</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
+  {%block styles%}
+  <style>
+     .line {
+    width: 100%;
+    border-bottom: 1px solid black;
+    margin: 20px 0;
+  }
+    .step-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    .step {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 80%;
+    }
+  
+    .step-number {
+      font-size: 20px;
+      font-weight: bold;
+      margin-right: 10px;
+    }
+  
+    .step-description {
+      font-size: 14px;
+      text-align: left;
+    }
+  </style>
+{%endblock%}
 {%endblock%}

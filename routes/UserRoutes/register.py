@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,redirect,url_for,session,flash,Response,Blueprint
+from flask import Flask,render_template,request,redirect,url_for,session,flash,Blueprint
 from database import connect_to_database
 from werkzeug.security import generate_password_hash, check_password_hash
 

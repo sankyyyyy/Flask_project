@@ -28,11 +28,8 @@ def gen():
 
 @qrcode_bp.route('/video_feed')
 def video_feed():
-    try:
-        return Response(gen(),
+    return Response(gen(),
                     mimetype='multipart/x-mixed-replace; boundary=frame')
-    except Exception as e:
-        return str(e)
 
 
 
@@ -53,15 +50,16 @@ def confirm_qr():
                 cur.execute("select * from slots where slot_user=%s and slot_time=%s",(username,slot))
                 user = cur.fetchone()
                 if user:
+                    qr_data_set.clear()
                     cur.execute("update slots set is_confirmed=True where slot_time=%s and slot_user=%s",(slot,username))
                     connection.commit()
-                    qr_data_set.clear()
                     flash("Your Appointment Confirmed succesfully","succsess")
-                    return redirect(url_for('home.home'))
+                    return redirect(url_for('login.login'))
                 else:
                     qr_data_set.clear()
                     flash("You haven't booked appointment yet!","error")
                     return redirect(url_for('home.home'))
+
             else:
                 qr_data_set.clear()
                 flash("Username is not matching!","error")
