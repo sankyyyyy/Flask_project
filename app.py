@@ -8,7 +8,7 @@ from routes.UserRoutes import home, login, logout,register,bookslot,qrcode,landi
 
 
 app = Flask(__name__)
-app.config["DEBUG"] = True
+
 Bootstrap(app)
 
 
@@ -23,7 +23,7 @@ app.register_blueprint(landing.landing_bp)
 
 
 app.secret_key = 'mysecretkeywhichissecret'
-log.start()
+# log.start()
 
 
 if __name__ == '__main__':
